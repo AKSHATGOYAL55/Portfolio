@@ -15,7 +15,7 @@ export const skills = {
   Languages: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3"],
   Frontend: ["React.js", "Next.js", "Redux Toolkit", "Context API", "Tailwind CSS", "Responsive Design"],
   Backend: ["Node.js", "Express.js", "Nest.js", "REST API Design", "JWT Auth", "RBAC"],
-  Databases: ["MongoDB", "PostgreSQL", "Supabase", "Schema Design", "Query Optimization"],
+  Databases: ["MongoDB", "Supabase", "Schema Design", "Query Optimization"],
   Tooling: ["Git", "GitHub", "Postman", "VS Code", "Agile Collaboration"],
 };
 
@@ -45,24 +45,17 @@ export const experience = [
   },
 ];
 
+// 👉 REPLACE THE "github" AND "live" VALUES BELOW WITH YOUR REAL URLS.
+// Each card is fully clickable and opens the "github" link in a new tab.
 export const projects = [
   {
-    title: "Savaari",
-    subtitle: "Car Rental Platform",
-    stack: ["Next.js", "Supabase", "PostgreSQL"],
+    title: "NexKart",
+    subtitle: "E-Commerce Platform",
+    stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "JWT"],
     description:
-      "A full-stack booking system with real-time vehicle availability and dynamic pricing logic. Integrated Supabase auth and database for secure user management and booking persistence, plus an admin dashboard for fleet management and booking analytics.",
-    github: "#",
-    live: "#",
-  },
-  {
-    title: "Restaurant Marketplace",
-    subtitle: "Food Ordering Platform",
-    stack: ["MongoDB", "Express", "React", "Node.js", "Redux Toolkit"],
-    description:
-      "A full-stack restaurant ordering platform. Implemented Redux Toolkit for predictable state management across the app, and designed secured REST APIs with optimized MongoDB schemas for performance under load.",
-    github: "#",
-    live: "#",
+      "A full-stack e-commerce platform engineered around a normalized MongoDB schema for products, orders, and inventory, with compound indexes to keep catalog queries fast at scale. Authentication is handled via short-lived JWT access tokens with refresh-token rotation, and role-based middleware separates customer, seller, and admin permissions at the API layer. State management runs on Redux Toolkit with normalized entity slices to avoid prop-drilling across the cart and checkout flow, while the checkout pipeline handles atomic stock decrements to prevent overselling under concurrent orders.",
+    github: "https://github.com/AKSHATGOYAL55/NexKart", // TODO: paste your NexKart GitHub repo URL here
+    live: "https://nex-kart-seven.vercel.app/",
   },
   {
     title: "Payment Reminder Automation",
@@ -70,8 +63,26 @@ export const projects = [
     stack: ["Next.js", "Supabase", "JWT", "RBAC"],
     description:
       "An automated payment reminder system that cut manual follow-up effort by 40%. Secured with JWT-based auth and role-based access control so only authorized roles can view or act on sensitive billing data.",
-    github: "#",
-    live: "#",
+    github: "https://github.com/vkapsitsolutions/payment_reminder_app_backend_interns", // TODO: paste your Payment Automation GitHub repo URL here
+    // live: "#",
+  },
+  // {
+  //   title: "Savaari",
+  //   subtitle: "Car Rental Platform",
+  //   stack: ["Next.js", "Supabase", "PostgreSQL"],
+  //   description:
+  //     "A full-stack booking system with real-time vehicle availability and dynamic pricing logic. Integrated Supabase auth and database for secure user management and booking persistence, plus an admin dashboard for fleet management and booking analytics.",
+  //   github: "#", // TODO: paste your Savaari GitHub repo URL here
+  //   live: "#",
+  // },
+  {
+    title: "Restaurant Marketplace",
+    subtitle: "Food Ordering Platform",
+    stack: ["MongoDB", "Express", "React", "Node.js", "Redux Toolkit"],
+    description:
+      "A full-stack restaurant ordering platform. Implemented Redux Toolkit for predictable state management across the app, and designed secured REST APIs with optimized MongoDB schemas for performance under load.",
+    github: "https://github.com/AKSHATGOYAL55/food-del", // TODO: paste your Restaurant Marketplace GitHub repo URL here
+    // live: "#",
   },
 ];
 
