@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { skills } from "../data/resume";
+import RocketLaunch from "./RocketLaunch";
 
 export default function Skills() {
   const categories = Object.entries(skills);
 
   return (
-    <section id="skills" className="relative py-28 px-6 bg-panel/30">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" className="relative py-28 px-6 bg-panel/30 overflow-hidden">
+      <RocketLaunch />
+      <div className="relative max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
