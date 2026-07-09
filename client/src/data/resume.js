@@ -5,8 +5,8 @@ export const profile = {
   location: "Indore, Madhya Pradesh, India",
   email: "akshatg525@gmail.com",
   phone: "+91-7000831953",
-  github: "https://github.com/",
-  linkedin: "https://linkedin.com/",
+  github: "https://github.com/AKSHATGOYAL55",
+  linkedin: "https://www.linkedin.com/in/akshat-goyal-7758ba219/",
   summary:
     "I build production-ready web applications end to end — from designing REST APIs and securing them with JWT and role-based access control, to shipping responsive React interfaces people actually enjoy using. My focus is the layer most portfolios skip: what happens between the click and the response. I've cut manual workload by 40% with automation, sped up page loads by 25% through query optimization, and shipped features ahead of schedule under real client deadlines. I'm early in my career and treat every project as a chance to write cleaner code than the last one.",
 };
