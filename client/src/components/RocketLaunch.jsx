@@ -12,6 +12,7 @@ export default function RocketLaunch() {
   const rafRef = useRef(null);
   const starsRef = useRef([]);
   const smokeRef = useRef([]);
+  const planetsRef = useRef([]);
   const rocketRef = useRef({ active: false, startTime: 0, flameAlpha: 0 });
   const sizeRef = useRef({ width: 0, height: 0 });
   const [inView, setInView] = useState(false);
@@ -65,6 +66,14 @@ export default function RocketLaunch() {
         phase: Math.random() * Math.PI * 2,
         speed: Math.random() * 1.5 + 0.5,
       }));
+
+      // planets positioned relative to section size so they stay put on resize
+      planetsRef.current = [
+        { name: "sun-glow", x: rect.width * 0.86, y: rect.height * 0.14, radius: 46, type: "glow" },
+        { name: "saturn", x: rect.width * 0.12, y: rect.height * 0.22, radius: 16, color: "#e8c98a", ring: true, driftPhase: Math.random() * Math.PI * 2 },
+        { name: "mars", x: rect.width * 0.82, y: rect.height * 0.62, radius: 10, color: "#c1552c", driftPhase: Math.random() * Math.PI * 2 },
+        { name: "earth", x: rect.width * 0.22, y: rect.height * 0.78, radius: 20, color: "#3b82c4", moon: true, driftPhase: Math.random() * Math.PI * 2 },
+      ];
     };
 
     resize();
@@ -77,6 +86,67 @@ export default function RocketLaunch() {
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(241, 243, 248, ${0.15 + twinkle * 0.5})`;
         ctx.fill();
+      }
+    };
+
+    const drawPlanets = (t) => {
+      for (const p of planetsRef.current) {
+        const drift = Math.sin(t * 0.00025 + (p.driftPhase || 0)) * 6;
+        const px = p.x;
+        const py = p.y + drift;
+
+        if (p.type === "glow") {
+          const grad = ctx.createRadialGradient(px, py, 0, px, py, p.radius);
+          grad.addColorStop(0, "rgba(255, 226, 160, 0.35)");
+          grad.addColorStop(1, "rgba(255, 226, 160, 0)");
+          ctx.beginPath();
+          ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = grad;
+          ctx.fill();
+          continue;
+        }
+
+        if (p.ring) {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(-0.35);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.radius * 1.9, p.radius * 0.55, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(232, 201, 138, 0.55)";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        const haloGrad = ctx.createRadialGradient(px, py, p.radius * 0.6, px, py, p.radius * 2.2);
+        haloGrad.addColorStop(0, `${p.color}22`);
+        haloGrad.addColorStop(1, `${p.color}00`);
+        ctx.beginPath();
+        ctx.arc(px, py, p.radius * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = haloGrad;
+        ctx.fill();
+
+        const bodyGrad = ctx.createRadialGradient(
+          px - p.radius * 0.35, py - p.radius * 0.35, p.radius * 0.1,
+          px, py, p.radius
+        );
+        bodyGrad.addColorStop(0, p.color);
+        bodyGrad.addColorStop(1, "#0b1120");
+        ctx.beginPath();
+        ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = bodyGrad;
+        ctx.fill();
+
+        if (p.moon) {
+          const orbitAngle = t * 0.0004 + (p.driftPhase || 0);
+          const orbitR = p.radius * 2.1;
+          const mx = px + Math.cos(orbitAngle) * orbitR;
+          const my = py + Math.sin(orbitAngle) * orbitR * 0.5;
+          ctx.beginPath();
+          ctx.arc(mx, my, p.radius * 0.28, 0, Math.PI * 2);
+          ctx.fillStyle = "#c9cdd6";
+          ctx.fill();
+        }
       }
     };
 
@@ -202,6 +272,7 @@ export default function RocketLaunch() {
       const { width, height } = sizeRef.current;
       ctx.clearRect(0, 0, width, height);
       drawStars(t);
+      drawPlanets(t);
       drawSmoke();
       drawRocket(t);
       rafRef.current = requestAnimationFrame(loop);

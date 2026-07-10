@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { profile } from "../data/resume";
@@ -7,7 +7,8 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle"); // idle | sending | slow | success | error
+  const slowTimerRef = useRef(null);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,16 +16,23 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
+
+    // If the backend has been idle, the free-tier host can take a while to
+    // wake up. Let the user know after 4s so it doesn't look broken.
+    slowTimerRef.current = setTimeout(() => setStatus("slow"), 4000);
+
     try {
       const res = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      clearTimeout(slowTimerRef.current);
       if (!res.ok) throw new Error("Request failed");
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
+      clearTimeout(slowTimerRef.current);
       setStatus("error");
     }
   };
@@ -96,12 +104,17 @@ export default function Contact() {
 
           <button
             type="submit"
-            disabled={status === "sending"}
+            disabled={status === "sending" || status === "slow"}
             className="w-full sm:w-auto px-8 py-3 rounded-lg bg-signal text-ink font-medium hover:-translate-y-0.5 transition-transform disabled:opacity-60"
           >
-            {status === "sending" ? "Sending…" : "Send message"}
+            {status === "sending" || status === "slow" ? "Sending…" : "Send message"}
           </button>
 
+          {status === "slow" && (
+            <p className="text-fog text-sm font-mono">
+              Still sending — the server was asleep and is waking up, this can take up to 30s.
+            </p>
+          )}
           {status === "success" && (
             <p className="text-mint text-sm font-mono">✓ Message sent — I'll reply soon.</p>
           )}

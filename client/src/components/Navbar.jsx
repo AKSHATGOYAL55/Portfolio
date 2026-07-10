@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { FiFileText } from "react-icons/fi";
+import ResumeModal from "./ResumeModal";
 
 const links = [
   { id: "about", label: "About" },
@@ -13,6 +15,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -37,6 +40,7 @@ export default function Navbar() {
   };
 
   return (
+    <>
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -50,7 +54,7 @@ export default function Navbar() {
           onClick={() => scrollTo("home")}
           className="font-display font-semibold text-lg tracking-tight text-paper"
         >
-          Port<span className="text-signal">folio</span>
+          Akshat<span className="text-signal">.</span>dev
         </button>
 
         <ul className="hidden md:flex items-center gap-8">
@@ -74,14 +78,21 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <button
-          onClick={() => scrollTo("contact")}
-          className="hidden md:inline-flex items-center gap-2 tag !text-paper hover:!border-signal hover:!text-signal transition-colors cursor-pointer"
-        >
-          Let's talk →
-        </button>
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => setResumeOpen(true)}
+            className="inline-flex items-center gap-2 tag !text-paper hover:!border-signal hover:!text-signal transition-colors cursor-pointer"
+          >
+            <FiFileText size={13} /> Resume
+          </button>
+          <button
+            onClick={() => scrollTo("contact")}
+            className="inline-flex items-center gap-2 tag !text-paper hover:!border-signal hover:!text-signal transition-colors cursor-pointer"
+          >
+            Let's talk →
+          </button>
+        </div>
 
-        {/* mobile toggle */}
         <button
           className="md:hidden text-paper text-2xl leading-none"
           onClick={() => setMenuOpen((v) => !v)}
@@ -111,9 +122,22 @@ export default function Navbar() {
                 </button>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  setResumeOpen(true);
+                }}
+                className="font-mono text-sm text-fog"
+              >
+                Resume
+              </button>
+            </li>
           </ul>
         </motion.div>
       )}
     </motion.header>
+    <ResumeModal open={resumeOpen} onClose={() => setResumeOpen(false)} />
+    </>
   );
 }

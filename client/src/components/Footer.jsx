@@ -7,7 +7,7 @@ export default function Footer() {
         <p className="font-mono">
           © {new Date().getFullYear()} {profile.name}
         </p>
-        <p className="font-mono text-xs">Built with React · Node.js · MongoDB</p>
+        <p className="font-mono text-xs">+91 70008-31953</p>
       </div>
     </footer>
   );
