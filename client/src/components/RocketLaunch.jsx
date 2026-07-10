@@ -67,13 +67,22 @@ export default function RocketLaunch() {
         speed: Math.random() * 1.5 + 0.5,
       }));
 
-      // planets positioned relative to section size so they stay put on resize
+      // planets positioned with padding so nothing clips at the container edges
+      // (margin accounts for the halo glow, which extends ~2.4x the body radius)
+      const pad = (pct, r) => Math.max(r * 2.4, Math.min(rect.width - r * 2.4, rect.width * pct));
+      const padY = (pct, r) => Math.max(r * 2.4, Math.min(rect.height - r * 2.4, rect.height * pct));
+
       planetsRef.current = [
-        { name: "sun-glow", x: rect.width * 0.86, y: rect.height * 0.14, radius: 46, type: "glow" },
-        { name: "saturn", x: rect.width * 0.12, y: rect.height * 0.22, radius: 16, color: "#e8c98a", ring: true, driftPhase: Math.random() * Math.PI * 2 },
-        { name: "mars", x: rect.width * 0.82, y: rect.height * 0.62, radius: 10, color: "#c1552c", driftPhase: Math.random() * Math.PI * 2 },
-        { name: "earth", x: rect.width * 0.22, y: rect.height * 0.78, radius: 20, color: "#3b82c4", moon: true, driftPhase: Math.random() * Math.PI * 2 },
-      ];
+        { name: "sun-glow", x: pad(0.9, 20), y: padY(0.1, 20), radius: 40, type: "glow" },
+        { name: "mercury", x: pad(0.08, 5), y: padY(0.12, 5), radius: 5, color: "#9a9a95" },
+        { name: "venus", x: pad(0.92, 8), y: padY(0.28, 8), radius: 8, color: "#d9b184" },
+        { name: "earth", x: pad(0.15, 13), y: padY(0.4, 13), radius: 13, color: "#3b82c4", moon: true },
+        { name: "mars", x: pad(0.85, 8), y: padY(0.52, 8), radius: 8, color: "#c1552c" },
+        { name: "jupiter", x: pad(0.12, 22), y: padY(0.64, 22), radius: 22, color: "#c9a37a", bands: true },
+        { name: "saturn", x: pad(0.8, 16), y: padY(0.78, 16), radius: 16, color: "#e8c98a", ring: true },
+        { name: "uranus", x: pad(0.32, 10), y: padY(0.9, 10), radius: 10, color: "#8fd3d8", thinRing: true },
+        { name: "neptune", x: pad(0.55, 9), y: padY(0.22, 9), radius: 9, color: "#4a5fc1" },
+      ].map((p) => ({ ...p, driftPhase: Math.random() * Math.PI * 2 }));
     };
 
     resize();
@@ -106,6 +115,7 @@ export default function RocketLaunch() {
           continue;
         }
 
+        // ring (Saturn — wide, tilted) or thin ring (Uranus — near vertical)
         if (p.ring) {
           ctx.save();
           ctx.translate(px, py);
@@ -117,7 +127,19 @@ export default function RocketLaunch() {
           ctx.stroke();
           ctx.restore();
         }
+        if (p.thinRing) {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(1.3);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.radius * 1.7, p.radius * 0.3, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(143, 211, 216, 0.45)";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+          ctx.restore();
+        }
 
+        // subtle glow behind planet body
         const haloGrad = ctx.createRadialGradient(px, py, p.radius * 0.6, px, py, p.radius * 2.2);
         haloGrad.addColorStop(0, `${p.color}22`);
         haloGrad.addColorStop(1, `${p.color}00`);
@@ -126,6 +148,7 @@ export default function RocketLaunch() {
         ctx.fillStyle = haloGrad;
         ctx.fill();
 
+        // planet body with simple shading (lit from top-left)
         const bodyGrad = ctx.createRadialGradient(
           px - p.radius * 0.35, py - p.radius * 0.35, p.radius * 0.1,
           px, py, p.radius
@@ -136,6 +159,22 @@ export default function RocketLaunch() {
         ctx.arc(px, py, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = bodyGrad;
         ctx.fill();
+
+        // horizontal bands (Jupiter)
+        if (p.bands) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.globalAlpha = 0.25;
+          ctx.fillStyle = "#8a6a45";
+          for (let i = -3; i <= 3; i++) {
+            const bandY = py + i * (p.radius / 3.2);
+            ctx.fillRect(px - p.radius, bandY - 1.6, p.radius * 2, 3.2);
+          }
+          ctx.restore();
+          ctx.globalAlpha = 1;
+        }
 
         if (p.moon) {
           const orbitAngle = t * 0.0004 + (p.driftPhase || 0);

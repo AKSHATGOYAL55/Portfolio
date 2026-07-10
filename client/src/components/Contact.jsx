@@ -1,14 +1,23 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { profile } from "../data/resume";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const COUNTDOWN_SECONDS = 20;
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | slow | success | error
-  const slowTimerRef = useRef(null);
+  const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_SECONDS);
+  const timersRef = useRef({ slowTimeout: null, interval: null });
+
+  const clearTimers = () => {
+    clearTimeout(timersRef.current.slowTimeout);
+    clearInterval(timersRef.current.interval);
+  };
+
+  useEffect(() => clearTimers, []);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,10 +25,14 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
+    setSecondsLeft(COUNTDOWN_SECONDS);
 
-    // If the backend has been idle, the free-tier host can take a while to
-    // wake up. Let the user know after 4s so it doesn't look broken.
-    slowTimerRef.current = setTimeout(() => setStatus("slow"), 4000);
+    timersRef.current.slowTimeout = setTimeout(() => {
+      setStatus("slow");
+      timersRef.current.interval = setInterval(() => {
+        setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }, 3000);
 
     try {
       const res = await fetch(`${API_URL}/api/contact`, {
@@ -27,12 +40,12 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      clearTimeout(slowTimerRef.current);
+      clearTimers();
       if (!res.ok) throw new Error("Request failed");
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
-      clearTimeout(slowTimerRef.current);
+      clearTimers();
       setStatus("error");
     }
   };
@@ -111,9 +124,24 @@ export default function Contact() {
           </button>
 
           {status === "slow" && (
-            <p className="text-fog text-sm font-mono">
-              Still sending — the server was asleep and is waking up, this can take up to 30s.
-            </p>
+            <div>
+              <p className="text-fog text-sm font-mono flex items-center justify-between">
+                <span>Waking up the server…</span>
+                <span className="text-signal tabular-nums">
+                  {secondsLeft > 0 ? `${secondsLeft}s` : "almost there…"}
+                </span>
+              </p>
+              <div className="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
+                <motion.div
+                  className="h-full bg-signal"
+                  initial={{ width: "0%" }}
+                  animate={{
+                    width: `${((COUNTDOWN_SECONDS - secondsLeft) / COUNTDOWN_SECONDS) * 100}%`,
+                  }}
+                  transition={{ duration: 0.9, ease: "linear" }}
+                />
+              </div>
+            </div>
           )}
           {status === "success" && (
             <p className="text-mint text-sm font-mono">✓ Message sent — I'll reply soon.</p>

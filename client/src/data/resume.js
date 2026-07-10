@@ -8,7 +8,7 @@ export const profile = {
   github: "https://github.com/AKSHATGOYAL55",
   linkedin: "https://www.linkedin.com/in/akshat-goyal-7758ba219/",
   summary:
-    "I build production-ready web applications end to end — from designing REST APIs and securing them with JWT and role-based access control, to shipping responsive React interfaces people actually enjoy using. My focus is the layer most portfolios skip: what happens between the click and the response. I've cut manual workload by 40% with automation, sped up page loads by 25% through query optimization, and shipped features ahead of schedule under real client deadlines. I'm early in my career and treat every project as a chance to write cleaner code than the last one.",
+    "Full Stack Developer specializing in MERN Stack, Next.js, and modern web technologies. I build scalable, secure, and high-performance applications with expertise in RESTful APIs, JWT authentication, database optimization, and clean architecture. Passionate about delivering production-ready software with maintainable code and exceptional user experiences.",
 };
 
 export const skills = {
@@ -51,7 +51,7 @@ export const projects = [
   {
     title: "NexKart",
     subtitle: "E-Commerce Platform",
-    stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "JWT"],
+    stack: ["React", "Node.js", "Express", "MongoDB", "Redux Toolkit", "JWT", "RBAC"],
     description:
       "A full-stack e-commerce platform engineered around a normalized MongoDB schema for products, orders, and inventory, with compound indexes to keep catalog queries fast at scale. Authentication is handled via short-lived JWT access tokens with refresh-token rotation, and role-based middleware separates customer, seller, and admin permissions at the API layer. State management runs on Redux Toolkit with normalized entity slices to avoid prop-drilling across the cart and checkout flow, while the checkout pipeline handles atomic stock decrements to prevent overselling under concurrent orders.",
     github: "https://github.com/AKSHATGOYAL55/NexKart", // TODO: paste your NexKart GitHub repo URL here
@@ -60,9 +60,9 @@ export const projects = [
   {
     title: "Payment Reminder Automation",
     subtitle: "Internal Tool @ VKAPS",
-    stack: ["Next.js", "Supabase", "JWT", "RBAC"],
+    stack: ["Next.js", "Supabase"],
     description:
-      "An automated payment reminder system that cut manual follow-up effort by 40%. Secured with JWT-based auth and role-based access control so only authorized roles can view or act on sensitive billing data.",
+      "Developed an enterprise-grade payment reminder automation platform leveraging Next.js, Supabase, and PostgreSQL. Engineered secure authentication with JWT and RBAC, optimized database interactions, and designed reusable service abstractions to improve maintainability and scalability. Automated billing workflows reduced manual follow-up efforts by 40% while ensuring secure access to sensitive financial operations.",
     github: "https://github.com/vkapsitsolutions/payment_reminder_app_backend_interns", // TODO: paste your Payment Automation GitHub repo URL here
     // live: "#",
   },
@@ -78,9 +78,9 @@ export const projects = [
   {
     title: "Restaurant Marketplace",
     subtitle: "Food Ordering Platform",
-    stack: ["MongoDB", "Express", "React", "Node.js", "Redux Toolkit"],
+    stack: ["MongoDB", "Express", "React", "Node.js", "Context API"],
     description:
-      "A full-stack restaurant ordering platform. Implemented Redux Toolkit for predictable state management across the app, and designed secured REST APIs with optimized MongoDB schemas for performance under load.",
+      "Designed and implemented a production-ready restaurant marketplace using the MERN Stack with a focus on scalability, maintainability, and performance. Built secure RESTful APIs, centralized application state using Redux Toolkit, optimized MongoDB data models and query execution, and developed a responsive, component-driven frontend delivering a seamless ordering experience across devices.",
     github: "https://github.com/AKSHATGOYAL55/food-del", // TODO: paste your Restaurant Marketplace GitHub repo URL here
     // live: "#",
   },

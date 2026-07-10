@@ -56,7 +56,7 @@ export default function ResumeModal({ open, onClose }) {
             {/* PDF Viewer */}
             <div className="flex-1 bg-[#0d1424]">
               <iframe
-                src="/resume.pdf#toolbar=0"
+                src="/Akshat_Goyal_Resume.pdf#toolbar=0"
                 title="Akshat Goyal Resume"
                 className="w-full h-full"
               />
