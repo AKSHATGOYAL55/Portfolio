@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 // and scatter away from the cursor when it gets close — each particle
 // has its own random "flee speed" so the motion feels organic, not robotic.
 
-const PARTICLE_COUNT = 199;
+const PARTICLE_COUNT = 249;
 const FLEE_RADIUS = 140;
 
 export default function ParticleBackground() {
