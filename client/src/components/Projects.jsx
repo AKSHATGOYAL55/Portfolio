@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { projects } from "../data/resume";
+import ProjectsBackground from "./ProjectsBackground";
 
 export default function Projects() {
   return (
     <section id="projects" className="relative py-28 px-6 bg-panel/30">
+      <ProjectsBackground/>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
