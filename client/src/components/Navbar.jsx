@@ -54,7 +54,7 @@ export default function Navbar() {
           onClick={() => scrollTo("home")}
           className="font-display font-semibold text-lg tracking-tight text-paper"
         >
-          Akshat<span className="text-signal">.</span>dev
+          Akshat<span className="text-signal">.</span><span className="text-signal">Goyal</span>
         </button>
 
         <ul className="hidden md:flex items-center gap-8">
