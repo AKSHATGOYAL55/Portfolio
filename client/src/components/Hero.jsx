@@ -46,11 +46,12 @@ export default function Hero() {
           <span className="font-semibold text-signal">
             {profile.role}
           </span>{" "}
-          shipping full-stack products with{" "}
-          <span className="text-paper">secure auth</span>,{" "}
+          building scalable web applications with{" "}
+          <span className="text-paper">secure authentication</span>,{" "}
+          <span className="text-paper">clean architecture</span>,{" "}
           <span className="text-paper">optimized databases</span>, and{" "}
           <span className="text-paper">
-            interfaces people enjoy using
+            intuitive user experiences.
           </span>.
         </motion.p>
 

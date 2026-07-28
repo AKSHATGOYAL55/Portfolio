@@ -22,7 +22,7 @@ export const skills = {
 export const experience = [
   {
     company: "VKAPS I.T Solutions Pvt. Ltd.",
-    role: "Full Stack Developer Intern",
+    role: "MERN Stack Developer Intern",
     location: "Indore, MP",
     period: "Dec 2025 – Mar 2026",
     points: [
