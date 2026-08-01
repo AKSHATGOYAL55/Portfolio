@@ -30,10 +30,6 @@ export default function Footer() {
               applications — REST APIs, optimized databases, and interfaces
               people actually enjoy using.
             </p>
-            {/* <div className="inline-flex items-center gap-2 tag mt-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
-              Open to full-time & internship roles
-            </div> */}
           </div>
 
           <div>
