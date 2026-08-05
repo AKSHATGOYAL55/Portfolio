@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 
 // A field of small glowing particles that drift slowly on their own,
 // and scatter away from the cursor when it gets close — each particle
-// has its own random "flee speed" so the motion feels organic, not robotic.
 
 const PARTICLE_COUNT = 249;
 const FLEE_RADIUS = 140;
