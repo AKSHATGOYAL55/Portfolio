@@ -44,9 +44,6 @@ export const experience = [
     ],
   },
 ];
-
-// 👉 REPLACE THE "github" AND "live" VALUES BELOW WITH YOUR REAL URLS.
-// Each card is fully clickable and opens the "github" link in a new tab.
 export const projects = [
   {
     title: "NexKart",
