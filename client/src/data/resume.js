@@ -63,15 +63,6 @@ export const projects = [
     github: "https://github.com/vkapsitsolutions/payment_reminder_app_backend_interns", // TODO: paste your Payment Automation GitHub repo URL here
     // live: "#",
   },
-  // {
-  //   title: "Savaari",
-  //   subtitle: "Car Rental Platform",
-  //   stack: ["Next.js", "Supabase", "PostgreSQL"],
-  //   description:
-  //     "A full-stack booking system with real-time vehicle availability and dynamic pricing logic. Integrated Supabase auth and database for secure user management and booking persistence, plus an admin dashboard for fleet management and booking analytics.",
-  //   github: "#", // TODO: paste your Savaari GitHub repo URL here
-  //   live: "#",
-  // },
   {
     title: "Restaurant Marketplace",
     subtitle: "Food Ordering Platform",
